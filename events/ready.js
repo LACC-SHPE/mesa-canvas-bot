@@ -7,8 +7,7 @@ async function canvaChecker(client) {
     await canvasAPI.fetchAnnouncements().then((announcements) => {
         if (announcements) {
             const channel = client.channels.cache.get(config.CHANNEL_ID)
-            console.log(announcements)
-
+            console.log("Sending Announcements to " + channel.name)
 
             const urlBttn = new ButtonBuilder()
             .setLabel("View Announcement")
