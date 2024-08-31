@@ -1,3 +1,4 @@
+const schema = require("../schema/db_schema")
 const config = require('../config.json');
 const puppeteer = require('puppeteer');
 const cheerio = require('cheerio')
@@ -7,6 +8,8 @@ const fs = require('fs');
 
 const baseURL = "https://ilearn.laccd.edu";
 const endpoint = "/api/v1/announcements";
+
+const db = require('./db')
 
 const params = {
     context_codes: config.COURSES
@@ -22,8 +25,6 @@ const fetchAnnouncements = async () => {
             headers: headers,
             params: params
         });
-
-        
 
         // Parse the response data
         const announcements = response.data;
@@ -49,6 +50,42 @@ const fetchAnnouncements = async () => {
             url: parsedAnnouncements.url,
         }
 
+        // Function to get the existing IDs
+        const getExistingIds = () => {
+            return new Promise((resolve, reject) => {
+                db.getAnnouncementIds((err, ids) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(ids);
+                    }
+                });
+            });
+        };
+
+        // Handling of insertion to the database
+        const insertAnnouncement = (announcement) => {
+            return new Promise((resolve, reject) => {
+                db.insertAnnouncement(announcement, (err) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+        };
+
+        // Get existing IDs and check for duplicates
+        const existingIds = await getExistingIds();
+        
+        // Comment this out for debugging purposes
+        if (existingIds.includes(announcement.id.toString())) {
+            return;
+        }
+
+        insertAnnouncement(announcement);
+
         // Generate the HTML template using the function
         const htmlTemplate = generateHTMLTemplate(announcement);
 
@@ -68,6 +105,7 @@ const fetchAnnouncements = async () => {
 const generateImage = async (html) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+    await page.setViewport({ width: 1500, height: 1080 });
     await page.setContent(html);
     await page.screenshot({ path: './cache/announcement.png', fullPage: true });
     await browser.close();
@@ -101,8 +139,6 @@ const generateHTMLTemplate = (announcement) => {
 module.exports = {
     generateHTMLTemplate
 };
-
-
 
 module.exports = {
     fetchAnnouncements

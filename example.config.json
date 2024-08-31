@@ -2,5 +2,7 @@
     "TOKEN": "YOURTOKEN",
     "APP_ID": "YOURAPPID",
     "CANVA_TOKEN": "CANVAID",
-    "COURSES": ["course_<COURSE_ID>"]
+    "COURSES": ["course_<COURSE_ID>"],
+    "GUILD_ID": "YOURGUILD_ID",
+    "CHANNEL_ID": "YOURCHANNEL_ID"
 }

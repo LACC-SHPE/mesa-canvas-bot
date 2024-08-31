@@ -8,7 +8,16 @@
         <style>
             body {
                 background-color: #212529;
+                font-size: large;
                 color: white;
+            }
+
+            .card-body > p > img {
+                max-width: 50%; 
+                height: auto;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .avatar {
@@ -33,6 +42,10 @@
                 margin-left: 10px;
                 margin-top: 5px;
             }
+
+            .card-text p {
+                font-size: 150px;
+            }
         </style>
     </head>
     <body>
@@ -45,6 +58,7 @@
                 <h5 class="card-title">{TITLE}</h5>
                 <p class="card-text">
                     {MESSAGE}
+                    <!-- <img src="https://ilearn.laccd.edu/courses/256773/files/55404543/preview?verifier=1B5HE78dVoRd9fqylD66JPuwmOBnmAzKXezwY5qg""> -->
                 </p>
             </div>
         </div>
