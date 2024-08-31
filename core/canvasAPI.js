@@ -28,7 +28,7 @@ const fetchAnnouncements = async () => {
 
         // Parse the response data
         const announcements = response.data;
-        const parsedAnnouncements = announcements[1];
+        const parsedAnnouncements = announcements[0];
 
         const $ = cheerio.load(parsedAnnouncements.message);
 
