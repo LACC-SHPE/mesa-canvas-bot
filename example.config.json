@@ -1,5 +1,6 @@
 {
     "TOKEN": "YOURTOKEN",
     "APP_ID": "YOURAPPID",
-    "CANVA_TOKEN": "CANVAID"
+    "CANVA_TOKEN": "CANVAID",
+    "COURSES": ["course_<COURSE_ID>"]
 }
