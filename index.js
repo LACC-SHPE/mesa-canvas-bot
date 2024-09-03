@@ -1,5 +1,5 @@
 const { Client, PermissionsBitField } = require('discord.js');
-
+const fs = require('fs');
 const client = new Client({
     intents: [
         'Guilds',
@@ -14,6 +14,10 @@ client.cache = new Map();
 require('./utils/ComponentLoader.js')(client);
 require('./utils/EventLoader.js')(client);
 require('./utils/RegisterCommands.js')(client);
+
+if (!fs.existsSync('./cache')) {
+    fs.mkdirSync('./cache');
+}
 
 console.log(`Logging in...`);
 client.login(client.config.TOKEN);

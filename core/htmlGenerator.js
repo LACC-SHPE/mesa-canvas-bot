@@ -6,9 +6,27 @@ const fs = require('fs');
 const generateImage = async (html) => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.setViewport({ width: 1500, height: 1080 });
+    
     await page.setContent(html);
-    await page.screenshot({ path: './cache/announcement.png', fullPage: true });
+    
+    // Get the content dimensions
+    const { width, height } = await page.evaluate(() => {
+        return {
+            width: document.body.scrollWidth,
+            height: document.body.scrollHeight
+        };
+    });
+    
+    // Set viewport based on content dimensions
+    await page.setViewport({ width: width, height: height });
+    
+    await page.screenshot({ 
+        path: './cache/announcement.png', 
+        fullPage: true, 
+        quality: 100, // Only works for JPEG
+        type: 'jpeg' // Change to 'png' for PNG format
+    });
+    
     await browser.close();
     return true;
 };
