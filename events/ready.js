@@ -44,6 +44,23 @@ async function canvaChecker(client) {
                 embeds.push(embed);
             }
 
+            // Create a separate embed for attachments
+            if (announcements.attachments.length > 0) {
+                const attachmentEmbed = new EmbedBuilder()
+                    .setTitle('Attachments')
+                    .setDescription("Here are the attachments in this announcement:")
+                    .setColor(0x0099ff)
+                    .setTimestamp();
+
+                // Add each attachment to the embed
+                announcements.attachments.forEach((attachment, index) => {
+                    attachmentEmbed.addFields({ name: `Attachment ${index + 1}`, value: `[${attachment.filename}](${attachment.url})` });
+                });
+
+                // Add the attachment embed to the embeds array
+                embeds.push(attachmentEmbed);
+            }
+
             // Send the message with the embeds array
             channel.send({
                 content: `@everyone **${announcements.author}** just posted an announcement!`,

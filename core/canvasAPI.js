@@ -31,11 +31,20 @@ const fetchAnnouncements = async () => {
         const $ = cheerio.load(parsedAnnouncements.message);
 
         const links = [];
+        const attachments = [];
 
         $('a').each((i, link) => {
             const href = $(link).attr('href');
             links.push(href);
         });
+
+        for (const attachment of parsedAnnouncements.attachments) {
+            attachments.push({
+                url: attachment.url,
+                filename: attachment.filename,
+                size: attachment.size,
+            })
+        }
 
         const announcement = {
             id: parsedAnnouncements.id,
@@ -45,6 +54,7 @@ const fetchAnnouncements = async () => {
             author_picture: parsedAnnouncements.author.avatar_image_url,
             message: parsedAnnouncements.message,
             links: links,
+            attachments: attachments,
             url: parsedAnnouncements.url,
         }
 
@@ -79,7 +89,7 @@ const fetchAnnouncements = async () => {
         
         // Comment this out for debugging purposes
         if (existingIds.includes(announcement.id.toString())) {
-            console.log(announcement);
+            // this should be return; only 
             return;
         }
 

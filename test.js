@@ -2,6 +2,15 @@
 
 const canvasAPI = require("./core/canvasAPI")
 
-canvasAPI.fetchAnnouncements().then((announcements) => {
-    console.log(announcements)
-})
+
+async function fetchAndLogAnnouncements() {
+    try {
+        const announcements = await canvasAPI.fetchAnnouncements();
+        console.log(announcements);
+    } catch (error) {
+        console.error('Error fetching announcements:', error);
+    }
+}
+
+// Call the async function
+fetchAndLogAnnouncements();
