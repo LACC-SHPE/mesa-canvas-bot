@@ -65,7 +65,8 @@ module.exports = {
             type: ActivityType.Custom,
         });
 
-        setInterval(function() {canvaChecker(client)}, 5000)
+        // <!-- Comment this out to skip the canva checker -->
+        // setInterval(function() {canvaChecker(client)}, 5000)
     },
 };
 

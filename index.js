@@ -14,6 +14,7 @@ client.cache = new Map();
 require('./utils/ComponentLoader.js')(client);
 require('./utils/EventLoader.js')(client);
 require('./utils/RegisterCommands.js')(client);
+require("./schema/db_schema.js")
 
 console.log(`Logging in...`);
 client.login(client.config.TOKEN);

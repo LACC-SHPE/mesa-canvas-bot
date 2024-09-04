@@ -1,4 +1,3 @@
-const schema = require("../schema/db_schema")
 const config = require('../config.json');
 const cheerio = require('cheerio')
 const axios = require("axios");
@@ -80,6 +79,7 @@ const fetchAnnouncements = async () => {
         
         // Comment this out for debugging purposes
         if (existingIds.includes(announcement.id.toString())) {
+            console.log(announcement);
             return;
         }
 
